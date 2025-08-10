@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Outils de pourcentage — Calculatrice</title>
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent:#7dd3fc;
+      --accent-2:#60a5fa;
+      --glass: rgba(255,255,255,0.04);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#071024 0%, #071827 60%);
+      color:#e6eef6;
+      padding:24px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .wrap{
+      width:100%;
+      max-width:980px;
+      background:linear-gradient(180deg,var(--card), rgba(10,16,28,0.95));
+      border-radius:12px;
+      padding:20px;
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:18px;
+    }
+    header{
+      grid-column:1 / -1;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    header h1{ margin:0; font-size:18px; }
+    header p{ margin:0; color:var(--muted); font-size:13px }
+    /* Bloc calcul rapide */
+    .quick-calc{
+      background:var(--glass);
+      padding:10px;
+      border-radius:8px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      margin-top:6px;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .quick-calc input{
+      flex:1;
+      padding:8px;
+      border-radius:6px;
+      border:1px solid rgba(255,255,255,0.04);
+      background:transparent;
+      color:inherit;
+    }
+    .quick-calc button{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      border:0;
+      padding:8px 10px;
+      border-radius:6px;
+      cursor:pointer;
+    }
+    .quick-result{
+      font-size:14px;
+      color:var(--muted);
+      margin-left:8px;
+    }
+    /* Reste identique */
+    .tools{ display:flex; flex-direction:column; gap:12px; }
+    .card{ background:var(--glass); padding:12px; border-radius:10px; }
+    label{ font-size:13px; color:var(--muted); display:block; margin-bottom:6px }
+    input[type="number"], select{
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.04);
+      background:transparent;
+      color:inherit;
+      outline:none;
+      font-size:15px;
+    }
+    .row{ display:flex; gap:10px; align-items:center }
+    button{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      border:0;
+      padding:10px 12px;
+      border-radius:8px;
+      color:#042033;
+      font-weight:600;
+      cursor:pointer;
+    }
+    .small{
+      font-size:13px;
+      padding:8px 10px;
+      border-radius:8px;
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.03);
+      color:var(--muted);
+      cursor:pointer;
+    }
+    .result{ margin-top:10px; padding:12px; border-radius:8px; }
+    .big{ font-size:20px; font-weight:700; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <h1>Outils de pourcentage — Calculatrice</h1>
+      <p>4 outils + 1 calcul rapide (-4%)</p>
+
+      <!-- Bloc rapide -4% -->
+      <div class="quick-calc">
+        <input id="quick-val" type="number" step="any" placeholder="Valeur" />
+        <button id="quick-btn">-4%</button>
+        <span id="quick-result" class="quick-result"></span>
+      </div>
+    </header>
+
+    <!-- Ici tu gardes tes cartes d'outils existantes -->
+    <section class="tools">
+      <!-- Exemple : outil X% de Y -->
+      <div class="card">
+        <label>Pourcentage</label>
+        <input type="number" id="percent" placeholder="ex. 20" />
+        <label>Valeur</label>
+        <input type="number" id="value" placeholder="ex. 100" />
+        <button onclick="calcPercent()">Calculer</button>
+        <div id="res1" class="result"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Fonction bloc rapide -4%
+    document.getElementById('quick-btn').addEventListener('click', () => {
+      const v = parseFloat(document.getElementById('quick-val').value);
+      if (isNaN(v)) {
+        document.getElementById('quick-result').textContent = "⚠ Valeur invalide";
+        return;
+      }
+      const res = v * 0.96;
+      document.getElementById('quick-result').textContent = "= " + res.toFixed(2);
+    });
+
+    // Exemple pour l'outil normal
+    function calcPercent(){
+      const p = parseFloat(document.getElementById('percent').value);
+      const v = parseFloat(document.getElementById('value').value);
+      if (isNaN(p) || isNaN(v)) {
+        document.getElementById('res1').textContent = "⚠ Valeur invalide";
+        return;
+      }
+      const res = (p/100) * v;
+      document.getElementById('res1').textContent = res.toFixed(2);
+    }
+  </script>
+</body>
+</html>
